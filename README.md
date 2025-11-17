@@ -1,10 +1,19 @@
-# 🌐 LocalShare — Secure LAN File Sharing
+<h1 align = "center">
+🌐 LocalShare — Secure LAN File Sharing
+</h1>
 
-**LocalShare** is a lightweight, cross-platform Python solution for seamless file sharing across devices on the same local network. Share files instantly without complex setup, accounts, or external dependencies.
+<div align="center">
 
----
+![License](https://img.shields.io/badge/License-MIT-D6C0B3?style=for-the-badge&logo=bookstack&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.7%2B-F1F3E0?style=for-the-badge&logo=python&logoColor=blue)
+![Platform](https://img.shields.io/badge/Platform-Cross--Platform-BBD8A3?style=for-the-badge&logo=devices&logoColor=white)
+
+</div>
+
+It is a lightweight, cross-platform Python solution for seamless file sharing across devices on the same local network. Share files instantly without complex setup, accounts, or external dependencies.
 
 ## ✨ Features
+---
 
 - **🖥️ Cross-Platform Compatibility** - Windows, Linux, macOS, and Android (Termux) support
 - **📁 Smart Directory Management** - Auto-detects and creates OS-appropriate shared folders
