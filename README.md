@@ -1,5 +1,5 @@
 <h1 align = "center">
-🌐 LocalShare — Secure LAN File Sharing
+LocalShare 🖥️
 </h1>
 
 <div align="center">
@@ -10,10 +10,13 @@
 
 </div>
 
-It is a lightweight, cross-platform Python solution for seamless file sharing across devices on the same local network. Share files instantly without complex setup, accounts, or external dependencies.
+<p align="center">  
+A lightweight, cross-platform Python solution for seamless file sharing across devices on the same local network. Share files instantly without complex setup, accounts, or external dependencies.
+</p>
+
+---
 
 ## ✨ Features
----
 
 - **🖥️ Cross-Platform Compatibility** - Windows, Linux, macOS, and Android (Termux) support
 - **📁 Smart Directory Management** - Auto-detects and creates OS-appropriate shared folders
