@@ -19,8 +19,8 @@
 ## 🚀 Quick Start
 
 ### Method 1: Direct Download (Recommended)
+- Download and run in one command
 ```bash
-# Download and run in one command
 curl -O https://raw.githubusercontent.com/jobayer1n1/LocalShare/main/LocalShare.py && python LocalShare.py
 ```
 
