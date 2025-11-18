@@ -53,7 +53,7 @@ python LocalShare.py
 | `python LocalShare.py --dir /path/to/folder` | Use custom shared directory |
 | `python LocalShare.py --port 8080` | Run on specific port |
 | `python LocalShare.py --pin 1234` | Enable PIN protection |
-| `python LocalShare.py --allow-delete` | Enable file deletion |
+| `python LocalShare.py --disable-delete` | Disable file deletion |
 | `python LocalShare.py --update` | Update to latest version |
 
 ---
