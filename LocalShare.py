@@ -491,7 +491,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <body>
   <div class="container">
     <div class="header">
-        <h1>📁 LAN Share Hub</h1>
+        <h1>🖥️ LocalShare 🖥️</h1>
         {% if pin_required %}
         <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
         {% endif %}
