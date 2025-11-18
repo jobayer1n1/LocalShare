@@ -10,28 +10,53 @@ import subprocess
 from werkzeug.utils import secure_filename
 import zipfile
 import io
+import urllib.request
 
 app = None
 shared_dir = ""
+connected_ips = set()
 
 # ---------- UPDATE FEATURE ----------
-SCRIPT_URL = "https://raw.githubusercontent.com/jobayer1n1/LocalShare/main/LocalShare.py"   # ← replace with your raw GitHub path
+SCRIPT_URL = "https://raw.githubusercontent.com/jobayer1n1/LocalShare/main/LocalShare.py"
 
 def update_script():
-    print("Downloading latest version...")
+    print("Downloading latest version from GitHub...")
     try:
-        result = subprocess.run(
-            ["curl", "-L", SCRIPT_URL, "-o", sys.argv[0]],
-            capture_output=True, text=True
-        )
-        if result.returncode != 0:
-            print("Update failed:", result.stderr)
-            sys.exit(1)
-
-        print("Updated successfully! Restart normally.")
+        script_path = os.path.abspath(sys.argv[0])
+        backup_path = script_path + ".backup"
+        
+        # Create backup
+        shutil.copy2(script_path, backup_path)
+        print(f"Backup created: {backup_path}")
+        
+        # Download new version
+        print(f"Downloading from: {SCRIPT_URL}")
+        with urllib.request.urlopen(SCRIPT_URL) as response:
+            if response.status != 200:
+                print(f"Download failed with status: {response.status}")
+                sys.exit(1)
+            
+            new_content = response.read()
+            
+        # Write new version
+        with open(script_path, 'wb') as f:
+            f.write(new_content)
+        
+        print("✓ Updated successfully!")
+        print(f"Backup saved as: {backup_path}")
+        print("Please restart the script to use the new version.")
         sys.exit(0)
+        
+    except urllib.error.URLError as e:
+        print(f"Network error: {e}")
+        print("Make sure you have internet connection and the URL is correct.")
+        sys.exit(1)
     except Exception as e:
-        print("Update failed:", e)
+        print(f"Update failed: {e}")
+        # Restore backup if it exists
+        if os.path.exists(backup_path):
+            shutil.copy2(backup_path, script_path)
+            print("Restored from backup.")
         sys.exit(1)
 # ------------------------------------
 
@@ -139,6 +164,19 @@ def build_app(base_dir, allow_delete=False, pin=None):
     def logout():
         session.pop('authenticated', None)
         return redirect(url_for('login'))
+    
+    @app.before_request
+    def track_visitor():
+        if request.endpoint and request.endpoint != 'static':
+            ip = request.remote_addr
+            if ip:
+                connected_ips.add(ip)
+    
+    @app.route('/stats')
+    def stats():
+        if not check_auth():
+            return jsonify({'error': 'Unauthorized'}), 403
+        return jsonify({'connected_users': len(connected_ips)})
     
     @app.route('/')
     def index():
@@ -367,8 +405,24 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             justify-content: space-between;
             align-items: center;
             margin-bottom: 30px;
+            flex-wrap: wrap;
         }
-        h1 { color: #2c3e50; }
+        h1 { color: #2c3e50; margin-right: auto; }
+        .user-count {
+            display: inline-flex;
+            align-items: center;
+            background: #3498db;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin-right: 10px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .user-count-icon {
+            margin-right: 6px;
+            font-size: 16px;
+        }
         .logout-btn {
             background: #e74c3c;
             color: white;
@@ -491,10 +545,16 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <body>
   <div class="container">
     <div class="header">
-        <h1>🖥️ LocalShare 🖥️</h1>
-        {% if pin_required %}
-        <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
-        {% endif %}
+        <h1>🔗 LocalShare</h1>
+        <div style="display: flex; align-items: center;">
+            <div class="user-count" id="userCount">
+                <span class="user-count-icon">👥</span>
+                <span id="connectedCount">0</span> connected
+            </div>
+            {% if pin_required %}
+            <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+            {% endif %}
+        </div>
     </div>
     
     <div class="upload-area" id="uploadArea">
@@ -570,6 +630,20 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     const progressContainer = document.getElementById('progressContainer');
     const progressFill = document.getElementById('progressFill');
     const uploadStatus = document.getElementById('uploadStatus');
+
+    // Update connected users count
+    function updateUserCount() {
+      fetch('{{ url_for("stats") }}')
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('connectedCount').textContent = data.connected_users;
+        })
+        .catch(err => console.error('Failed to fetch stats:', err));
+    }
+    
+    // Update count every 5 seconds
+    updateUserCount();
+    setInterval(updateUserCount, 5000);
 
     // Drag and drop handlers
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
