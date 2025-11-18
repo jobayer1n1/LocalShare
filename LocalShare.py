@@ -15,7 +15,7 @@ app = None
 shared_dir = ""
 
 # ---------- UPDATE FEATURE ----------
-SCRIPT_URL = "https://github.com/jobayer1n1/LocalShare/main/LocalShare.py"   # ← replace with your raw GitHub path
+SCRIPT_URL = "https://raw.githubusercontent.com/jobayer1n1/LocalShare/main/LocalShare.py"   # ← replace with your raw GitHub path
 
 def update_script():
     print("Downloading latest version...")
