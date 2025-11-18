@@ -548,7 +548,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         <h1>🔗 LocalShare</h1>
         <div style="display: flex; align-items: center;">
             <div class="user-count" id="userCount">
-                <span class="user-count-icon">👥</span>
+                <span class="user-count-icon">🖥️</span>
                 <span id="connectedCount">0</span> connected
             </div>
             {% if pin_required %}
