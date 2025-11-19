@@ -6,6 +6,7 @@ LocalShare 🖥️
 
 ![License](https://img.shields.io/badge/License-MIT-D6C0B3?style=for-the-badge&logo=bookstack&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3.7%2B-F1F3E0?style=for-the-badge&logo=python&logoColor=blue)
+![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=python&logoColor=blue)
 ![Platform](https://img.shields.io/badge/Platform-Cross--Platform-BBD8A3?style=for-the-badge&logo=devices&logoColor=white)
 
 </div>
@@ -24,7 +25,8 @@ A lightweight, cross-platform Python solution for seamless file sharing across d
 - **🔒 Security Options** - Optional PIN protection for uploads and deletions
 - **⚡ Zero Configuration** - Works out of the box with default settings
 - **🔄 Self-Updating** - Built-in update mechanism to stay current
-- **🗑️ Controlled File Management** - Optional delete functionality with `--allow-delete` flag
+- 🗑️ Controlled File Management** - Optional disable delete functionality with `--disable-delete` flag
+- ▶️ Stream video, audio or view pictures
 
 ---
 
